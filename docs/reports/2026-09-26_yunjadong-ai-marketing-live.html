@@ -1,0 +1,1237 @@
+<title>윤자동 AI 마케팅 라이브 분석</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --bg: #f3f5f7;
+  --surface: #ffffff;
+  --surface-2: #eef1f4;
+  --ink: #121820;
+  --ink-2: #444e5a;
+  --muted: #6b7582;
+  --line: #dce1e6;
+  --line-strong: #c5ccd4;
+  --accent: #1c5cab;
+  --accent-soft: #e3edf9;
+  --rec: #d03b3b;
+  --d-tech: #2a78d6;
+  --d-mkt: #eb6834;
+  --d-dsn: #1baf7a;
+  --d-view: #eda100;
+  --d-none: #aab2bb;
+  --ev-ok: #0ca30c;
+  --ev-hint: #fab219;
+  --ev-guess: #8b90a6;
+  --sev-high: #ec835a;
+  --sev-mid: #fab219;
+  --bar: #7d8896;
+  --bar-hi: #1c5cab;
+  --grid: #e6eaee;
+  --shadow: 0 1px 2px rgba(18, 24, 32, .05), 0 4px 16px rgba(18, 24, 32, .04);
+  --sans: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0f1318;
+    --surface: #161b21;
+    --surface-2: #1d242c;
+    --ink: #edf1f5;
+    --ink-2: #b9c2cc;
+    --muted: #8d97a3;
+    --line: #29313a;
+    --line-strong: #3a444f;
+    --accent: #7fb0ee;
+    --accent-soft: #1a2a3d;
+    --rec: #e66767;
+    --d-tech: #3987e5;
+    --d-mkt: #d95926;
+    --d-dsn: #199e70;
+    --d-view: #c98500;
+    --d-none: #56606b;
+    --bar: #6d7886;
+    --bar-hi: #7fb0ee;
+    --grid: #232a32;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0f1318;
+  --surface: #161b21;
+  --surface-2: #1d242c;
+  --ink: #edf1f5;
+  --ink-2: #b9c2cc;
+  --muted: #8d97a3;
+  --line: #29313a;
+  --line-strong: #3a444f;
+  --accent: #7fb0ee;
+  --accent-soft: #1a2a3d;
+  --rec: #e66767;
+  --d-tech: #3987e5;
+  --d-mkt: #d95926;
+  --d-dsn: #199e70;
+  --d-view: #c98500;
+  --d-none: #56606b;
+  --bar: #6d7886;
+  --bar-hi: #7fb0ee;
+  --grid: #232a32;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .3);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  padding-inline: 16px;
+  padding-block: 0 64px;
+}
+a { color: var(--accent); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+.mono, time, .tc { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.num { font-variant-numeric: tabular-nums; }
+
+.shell { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 196px minmax(0, 1fr); gap: 40px; }
+@media (max-width: 999px) { .shell { grid-template-columns: minmax(0, 1fr); gap: 0; } }
+
+/* TOC */
+.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; padding-top: 28px; }
+.toc-label { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; font-weight: 600; }
+.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; counter-reset: toc; }
+.toc a { display: flex; gap: 10px; align-items: baseline; padding: 5px 8px; border-radius: 6px; color: var(--ink-2); text-decoration: none; font-size: 13.5px; line-height: 1.4; }
+.toc a:hover { background: var(--surface-2); color: var(--ink); }
+.toc a .tc { color: var(--muted); font-size: 11px; min-width: 18px; }
+@media (max-width: 999px) { .toc { display: none; } }
+
+.chipnav { display: none; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); margin-inline: -16px; padding: 10px 16px; border-bottom: 1px solid var(--line); overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+.chipnav::-webkit-scrollbar { display: none; }
+.chipnav a { display: inline-block; padding: 5px 11px; margin-right: 6px; border: 1px solid var(--line); border-radius: 999px; font-size: 13px; color: var(--ink-2); text-decoration: none; background: var(--surface); }
+@media (max-width: 999px) { .chipnav { display: block; } }
+
+main { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 56px; padding-top: 28px; }
+section { scroll-margin-top: 72px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; min-width: 0; }
+.shell > div, .panel, .two > * { min-width: 0; }
+.sec-head { display: grid; gap: 6px; }
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.eyebrow .tc { letter-spacing: 0; text-transform: none; }
+h2 { font-size: 26px; line-height: 1.3; font-weight: 700; }
+.lede { color: var(--ink-2); max-width: 68ch; }
+h3 { font-size: 17px; line-height: 1.4; font-weight: 600; }
+
+/* Header */
+.hero { display: grid; gap: 18px; padding-bottom: 8px; border-bottom: 1px solid var(--line); padding-block: 8px 28px; }
+.onair { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12px; color: var(--ink-2); }
+.onair i { width: 8px; height: 8px; border-radius: 50%; background: var(--rec); display: inline-block; }
+.hero h1 { font-size: clamp(28px, 4.2vw, 42px); line-height: 1.22; font-weight: 700; letter-spacing: -0.02em; max-width: 26ch; }
+.hero h1 span { color: var(--muted); font-weight: 500; }
+.metarow { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 13.5px; color: var(--ink-2); }
+.metarow b { font-family: var(--mono); font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
+.crew { display: flex; flex-wrap: wrap; gap: 8px; }
+.crew span { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; padding: 4px 10px 4px 8px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+.crew span i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
+
+.notice { display: grid; grid-template-columns: auto 1fr; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; }
+.notice .tag { font-family: var(--mono); font-size: 11px; padding: 2px 7px; border: 1px solid var(--line-strong); border-radius: 4px; color: var(--ink-2); height: fit-content; white-space: nowrap; }
+.notice p { color: var(--ink-2); font-size: 14px; }
+.legend-ev { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 8px; font-size: 13px; color: var(--ink-2); }
+@media (max-width: 560px) { .notice { grid-template-columns: 1fr; } }
+
+/* Evidence chip */
+.ev { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: var(--ink-2); white-space: nowrap; }
+.ev::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ev-guess); }
+.ev.ok::before { background: var(--ev-ok); }
+.ev.hint::before { background: var(--ev-hint); }
+.ev.guess::before { background: var(--ev-guess); border-radius: 1px; transform: rotate(45deg); width: 7px; height: 7px; }
+
+/* Summary */
+.findings { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.finding { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.finding .k { font-size: 13px; font-weight: 600; color: var(--muted); padding-top: 2px; display: grid; gap: 6px; align-content: start; }
+.finding .k .big { font-family: var(--mono); font-size: 22px; font-weight: 500; color: var(--ink); letter-spacing: -0.02em; }
+.finding p { max-width: 70ch; }
+.finding p b { font-weight: 600; }
+@media (max-width: 640px) { .finding { grid-template-columns: 1fr; gap: 6px; } }
+
+.recs { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+.rec { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 8px; align-content: start; }
+.rec .top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.rec .rank { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.rec p { font-size: 14px; color: var(--ink-2); }
+.rec p b { color: var(--ink); font-weight: 600; }
+.dom { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-2); white-space: nowrap; }
+.dom i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; background: var(--d-none); }
+.dom.tech i, i.tech { background: var(--d-tech); }
+.dom.mkt i, i.mkt { background: var(--d-mkt); }
+.dom.dsn i, i.dsn { background: var(--d-dsn); }
+.dom.view i, i.view { background: var(--d-view); }
+i.none { background: var(--d-none); }
+
+/* Timeline */
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; box-shadow: var(--shadow); }
+.panel-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 8px; }
+.panel-head h3 { font-size: 15px; }
+.panel-head .note { font-size: 12.5px; color: var(--muted); }
+.chart-scroll { overflow-x: auto; margin-inline: -4px; padding-inline: 4px; }
+.chart-scroll svg { display: block; width: 100%; min-width: 680px; height: auto; }
+svg text { font-family: var(--sans); }
+.ax { fill: var(--muted); font-size: 11px; font-family: var(--mono); }
+.gridline { stroke: var(--grid); stroke-width: 1; }
+.baseline { stroke: var(--line-strong); stroke-width: 1; }
+.bar { fill: var(--bar); }
+.bar.peak { fill: var(--bar-hi); }
+.bar-hit { fill: transparent; cursor: default; }
+.bar-hit:hover + .bar, .bar-hit:focus + .bar { fill: var(--bar-hi); }
+.vlab { fill: var(--ink); font-size: 12px; font-family: var(--mono); font-weight: 500; paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
+.seg { stroke: var(--surface); stroke-width: 2; }
+.seg.tech { fill: var(--d-tech); } .seg.mkt { fill: var(--d-mkt); } .seg.dsn { fill: var(--d-dsn); } .seg.view { fill: var(--d-view); } .seg.none { fill: var(--d-none); }
+.seg-hit { fill: transparent; }
+.evline { stroke: var(--ink-2); stroke-width: 1; stroke-dasharray: 2 3; }
+.evdot { fill: var(--surface); stroke: var(--ink); stroke-width: 2; }
+.evlab { fill: var(--ink); font-size: 12px; font-weight: 600; }
+.evtc { fill: var(--muted); font-size: 10.5px; font-family: var(--mono); }
+.rowlab { fill: var(--muted); font-size: 11px; font-weight: 600; letter-spacing: .04em; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12.5px; color: var(--ink-2); margin-top: 12px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 12px; height: 9px; border-radius: 2px; display: inline-block; }
+.tip { position: fixed; z-index: 50; pointer-events: none; background: var(--ink); color: var(--bg); font-size: 12.5px; line-height: 1.45; padding: 7px 10px; border-radius: 6px; max-width: 260px; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+.tip b { font-family: var(--mono); font-weight: 500; }
+
+.seglist { display: grid; gap: 0; margin-top: 14px; border-top: 1px solid var(--line); }
+.seglist li { list-style: none; display: grid; grid-template-columns: 92px 14px minmax(0, 1fr) auto; gap: 10px; align-items: baseline; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.seglist ul { margin: 0; padding: 0; }
+.seglist .tc { font-size: 12.5px; color: var(--muted); }
+.seglist i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; transform: translateY(1px); }
+.seglist .desc small { display: block; color: var(--muted); font-size: 12.5px; }
+.seglist li.key { font-weight: 500; }
+@media (max-width: 560px) { .seglist li { grid-template-columns: 76px 12px minmax(0, 1fr); } .seglist li .ev { grid-column: 3; } }
+
+/* Elements */
+.filters { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; }
+.fgroup { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.fgroup .fl { font-size: 12px; color: var(--muted); margin-right: 4px; font-weight: 600; }
+.fbtn { font: inherit; font-size: 13px; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink-2); cursor: pointer; display: inline-flex; gap: 6px; align-items: center; }
+.fbtn:hover { border-color: var(--ink-2); color: var(--ink); }
+.fbtn[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.fbtn i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+.count { font-size: 12.5px; color: var(--muted); font-family: var(--mono); }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+@media (max-width: 420px) { .cards { grid-template-columns: 1fr; } }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 16px 14px; display: grid; gap: 10px; align-content: start; }
+.card-top { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+.card-id { font-family: var(--mono); font-size: 12px; color: var(--muted); display: inline-flex; gap: 8px; align-items: center; }
+.card-id i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
+.card h3 { font-size: 16px; }
+.card .src { font-size: 12.5px; color: var(--muted); }
+.card .src .tc { color: var(--ink-2); }
+.card .obs { font-size: 14px; color: var(--ink-2); }
+.card dl { margin: 0; display: grid; gap: 8px; padding-top: 10px; border-top: 1px dashed var(--line); }
+.card dt { font-size: 11.5px; font-weight: 600; letter-spacing: .04em; color: var(--muted); }
+.card dd { margin: 0; font-size: 14px; }
+.card ol { margin: 2px 0 0; padding-left: 18px; font-size: 13.5px; color: var(--ink-2); display: grid; gap: 2px; }
+.card .kpi { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 12.5px; color: var(--ink-2); background: var(--surface-2); border-radius: 6px; padding: 7px 10px; }
+.card .kpi b { font-weight: 600; color: var(--ink); }
+.empty { padding: 28px; text-align: center; color: var(--muted); border: 1px dashed var(--line-strong); border-radius: 10px; }
+
+/* Funnel */
+.progress { position: relative; height: 150px; margin: 4px 36px 8px; }
+.progress .track { position: absolute; left: 0; right: 0; top: 72px; height: 6px; border-radius: 3px; background: var(--surface-2); border: 1px solid var(--line); }
+.progress .fill { position: absolute; left: 0; top: 72px; height: 6px; border-radius: 3px; background: var(--d-mkt); opacity: .35; }
+.pmark { position: absolute; transform: translateX(-50%); display: grid; justify-items: center; gap: 6px; width: 110px; text-align: center; }
+.pmark.up { bottom: calc(150px - 82px); }
+.pmark.down { top: 68px; }
+.pmark .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--surface); border: 3px solid var(--d-mkt); }
+.pmark .pl { font-size: 12.5px; font-weight: 600; line-height: 1.3; }
+.pmark .pl .tc { display: block; font-weight: 400; color: var(--muted); font-size: 11px; }
+@media (max-width: 640px) { .pmark .pl { font-size: 11.5px; } .pmark { width: 86px; } .progress { margin-inline: 30px; } }
+.steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 0; counter-reset: st; border-top: 1px solid var(--line); }
+.step { padding: 14px 16px 14px 0; border-bottom: 1px solid var(--line); display: grid; gap: 4px; align-content: start; }
+.step .sh { display: flex; gap: 8px; align-items: baseline; }
+.step .sn { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.step h3 { font-size: 15px; }
+.step p { font-size: 13.5px; color: var(--ink-2); }
+.step .meta { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--muted); flex-wrap: wrap; }
+.step.key h3::after { content: "핵심"; font-size: 10.5px; font-weight: 600; color: var(--d-mkt); border: 1px solid currentColor; border-radius: 4px; padding: 0 5px; margin-left: 8px; vertical-align: 2px; }
+.leaks { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.leak { border-left: 3px solid var(--sev-high); padding: 4px 0 4px 12px; display: grid; gap: 2px; }
+.leak b { font-size: 14px; font-weight: 600; }
+.leak span { font-size: 13px; color: var(--ink-2); }
+
+/* Concept */
+.equation { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 14px; align-items: stretch; }
+.eq-term { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 6px; align-content: start; }
+.eq-term .w { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+.eq-term p { font-size: 13.5px; color: var(--ink-2); }
+.eq-term.main { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.eq-term.main p { color: var(--bg); opacity: .8; }
+.eq-op { font-family: var(--mono); font-size: 28px; color: var(--muted); align-self: center; }
+@media (max-width: 760px) { .equation { grid-template-columns: 1fr; } .eq-op { justify-self: center; line-height: 1; } }
+.quote { border-left: 3px solid var(--d-view); padding: 6px 0 6px 16px; color: var(--ink-2); max-width: 72ch; font-size: 14.5px; }
+.quote cite { display: block; font-style: normal; font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: .03em; background: var(--surface-2); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.q { color: var(--ink-2); }
+
+/* Service */
+.position { display: grid; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 22px; }
+.position .stmt { font-size: clamp(20px, 2.6vw, 26px); font-weight: 700; line-height: 1.35; letter-spacing: -0.015em; max-width: 30ch; }
+.position .stmt em { font-style: normal; color: var(--accent); }
+.position p { color: var(--ink-2); font-size: 14px; max-width: 70ch; }
+.assume { font-size: 12.5px; color: var(--muted); }
+.assume b { color: var(--ink-2); }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+
+.pmap { position: relative; aspect-ratio: 1.25; max-width: 100%; border: 1px solid var(--line); border-radius: 8px; background:
+  linear-gradient(var(--line), var(--line)) 50% 0 / 1px 100% no-repeat,
+  linear-gradient(var(--line), var(--line)) 0 50% / 100% 1px no-repeat, var(--surface-2); margin: 4px 0 26px; }
+.pmap .axl { position: absolute; font-size: 11px; color: var(--muted); }
+.pmap .axl.x0 { left: 6px; bottom: -22px; } .pmap .axl.x1 { right: 6px; bottom: -22px; }
+.pmap .axl.y0 { left: 8px; bottom: 6px; }
+.pmap .axl.y1 { left: 8px; top: 6px; }
+.pdot { position: absolute; transform: translate(-50%, -50%); display: grid; justify-items: center; gap: 3px; text-align: center; font-size: 12px; line-height: 1.3; width: 112px; }
+.pdot i { width: 12px; height: 12px; border-radius: 50%; background: var(--ink-2); border: 2px solid var(--surface); box-shadow: 0 0 0 1px var(--ink-2); }
+.pdot small { color: var(--muted); font-size: 11px; }
+.pdot.us i { background: var(--accent); box-shadow: 0 0 0 1px var(--accent); width: 16px; height: 16px; }
+.pdot.us b { color: var(--accent); }
+
+.arch { display: grid; gap: 10px; }
+.layer { display: grid; grid-template-columns: 116px minmax(0, 1fr); gap: 12px; align-items: stretch; }
+.layer .ll { font-size: 12px; font-weight: 600; color: var(--muted); padding-top: 9px; letter-spacing: .02em; }
+.layer .lb { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.box { border: 1px solid var(--line-strong); background: var(--surface); border-radius: 7px; padding: 6px 10px; font-size: 13px; }
+.box.hl { border-color: var(--accent); background: var(--accent-soft); }
+.box .tc { color: var(--muted); font-size: 11.5px; margin-right: 4px; }
+.arrow { color: var(--muted); font-family: var(--mono); font-size: 13px; }
+.loop-note { font-size: 12.5px; color: var(--muted); padding-left: 128px; }
+@media (max-width: 640px) { .layer { grid-template-columns: 1fr; gap: 4px; } .layer .ll { padding-top: 0; } .loop-note { padding-left: 0; } }
+
+.matrix { display: grid; grid-template-columns: 26px repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, auto) 24px; gap: 4px; }
+.mcell { background: var(--surface-2); border-radius: 6px; padding: 8px; display: flex; flex-direction: column; gap: 5px; min-height: 76px; }
+.mcell.win { background: var(--accent-soft); outline: 1px solid var(--accent); outline-offset: -1px; }
+.mitem { font-size: 12.5px; line-height: 1.35; background: var(--surface); border: 1px solid var(--line); border-radius: 5px; padding: 4px 7px; }
+.mitem .tc { font-size: 10.5px; color: var(--muted); display: block; }
+.mylab { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 11px; color: var(--muted); display: grid; place-items: center; }
+.mxlab { font-size: 11px; color: var(--muted); text-align: center; align-self: center; }
+
+.formats { display: flex; align-items: flex-end; gap: 18px; flex-wrap: wrap; padding: 6px 0 2px; }
+.fmt { display: grid; gap: 6px; justify-items: start; }
+.fmt .shape { border: 1.5px solid var(--ink-2); border-radius: 3px; background: var(--surface-2); position: relative; }
+.fmt .shape.var { border-bottom-style: dashed; }
+.fmt .fn { font-size: 12.5px; font-weight: 600; }
+.fmt .fs { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+
+.tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.tier { padding: 14px; border-right: 1px solid var(--line); display: grid; gap: 4px; align-content: start; }
+.tier:last-child { border-right: 0; }
+.tier .tn { font-size: 13px; font-weight: 600; }
+.tier .tp { font-family: var(--mono); font-size: 15px; font-weight: 500; }
+.tier p { font-size: 12.5px; color: var(--ink-2); }
+.tier.main { background: var(--accent-soft); }
+@media (max-width: 700px) { .tier { border-right: 0; border-bottom: 1px solid var(--line); } .tier:last-child { border-bottom: 0; } }
+
+/* Roadmap */
+.road { display: grid; grid-template-columns: 92px repeat(6, minmax(120px, 1fr)); min-width: 860px; }
+.road > div { padding: 9px 10px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); font-size: 12.5px; line-height: 1.45; }
+.road > div:nth-child(7n) { border-right: 0; }
+.road .rh { font-family: var(--mono); font-size: 11.5px; color: var(--muted); background: var(--surface-2); font-weight: 500; }
+.road .rl { font-size: 12.5px; font-weight: 600; display: flex; gap: 6px; align-items: flex-start; }
+.road .rl i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; margin-top: 5px; flex: none; }
+.road .cell { border-left: 0; }
+.road .cell.tech { box-shadow: inset 3px 0 0 var(--d-tech); }
+.road .cell.mkt { box-shadow: inset 3px 0 0 var(--d-mkt); }
+.road .cell.dsn { box-shadow: inset 3px 0 0 var(--d-dsn); }
+.road .cell.ms { font-weight: 600; }
+.road > div.last { border-bottom: 0; }
+
+/* Risks */
+.risks { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.risk { display: grid; grid-template-columns: 76px minmax(0, 1fr) minmax(0, 1.2fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px; align-items: baseline; }
+.risk .sev { display: inline-flex; gap: 6px; align-items: center; font-size: 12px; font-weight: 600; color: var(--ink-2); }
+.risk .sev::before { content: ""; width: 9px; height: 9px; border-radius: 2px; background: var(--sev-mid); }
+.risk .sev.high::before { background: var(--sev-high); }
+.risk .r { font-weight: 500; }
+.risk .m { color: var(--ink-2); font-size: 13.5px; }
+@media (max-width: 640px) { .risk { grid-template-columns: 1fr; gap: 2px; } }
+
+.next { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.opt { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 8px; align-content: start; }
+.opt p { font-size: 14px; color: var(--ink-2); }
+.copyrow { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.copyrow code { font-family: var(--mono); font-size: 12.5px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 5px; padding: 4px 8px; user-select: all; }
+.copybtn { font: inherit; font-size: 12.5px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink); cursor: pointer; }
+.copybtn:hover { border-color: var(--ink-2); }
+
+.sources { columns: 2 320px; column-gap: 32px; font-size: 13px; color: var(--ink-2); padding-left: 18px; margin: 0; }
+.sources li { break-inside: avoid; margin-bottom: 6px; overflow-wrap: anywhere; }
+footer { font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+</style>
+
+<div class="shell">
+  <aside class="toc" aria-label="목차">
+    <div class="toc-label">목차</div>
+    <ol>
+      <li><a href="#summary"><span class="tc">00</span>결론 요약</a></li>
+      <li><a href="#timeline"><span class="tc">01</span>강의 흐름</a></li>
+      <li><a href="#elements"><span class="tc">02</span>요소별 적용·실행</a></li>
+      <li><a href="#funnel"><span class="tc">03</span>라이브 퍼널</a></li>
+      <li><a href="#concept"><span class="tc">04</span>컨셉 프레임</a></li>
+      <li><a href="#service"><span class="tc">05</span>우리 서비스</a></li>
+      <li><a href="#roadmap"><span class="tc">06</span>90일 로드맵</a></li>
+      <li><a href="#risks"><span class="tc">07</span>리스크</a></li>
+      <li><a href="#next"><span class="tc">08</span>v2 검증·출처</a></li>
+    </ol>
+  </aside>
+
+  <div>
+    <nav class="chipnav" aria-label="섹션 이동">
+      <a href="#summary">요약</a><a href="#timeline">강의 흐름</a><a href="#elements">요소별 실행</a><a href="#funnel">퍼널</a><a href="#concept">컨셉</a><a href="#service">우리 서비스</a><a href="#roadmap">로드맵</a><a href="#risks">리스크</a><a href="#next">v2·출처</a>
+    </nav>
+
+    <main>
+      <header class="hero">
+        <div class="onair"><i aria-hidden="true"></i>REC 2026-09-07 20:00 KST · 2:52:20 · 분석 2026-09-26</div>
+        <h1>AI 마케팅 왕초보 무료 강의 <span>— 무엇을 가르쳤고, 우리는 무엇을 할 것인가</span></h1>
+        <div class="metarow">
+          <span>채널 <b>윤자동</b> (구독 7.15만)</span>
+          <span>조회 <b>6,794</b></span>
+          <span>라이브 채팅 <b>214</b>건 · 작성자 <b>55</b>명</span>
+          <span>원본 <a href="https://www.youtube.com/live/X8kn17oun9I" target="_blank" rel="noopener">youtube.com/live/X8kn17oun9I</a></span>
+        </div>
+        <div class="crew" aria-label="작성 에이전트">
+          <span><i class="tech"></i>CTO · 오케스트레이션·기술</span>
+          <span><i class="mkt"></i>CMO 에이전트 · 마케팅·퍼널</span>
+          <span><i class="dsn"></i>디자인 에이전트 · 크리에이티브</span>
+        </div>
+        <div class="notice" role="note">
+          <span class="tag">한계</span>
+          <div>
+            <p>이 환경의 네트워크 정책이 <span class="mono">www.youtube.com</span>과 <span class="mono">*.googlevideo.com</span>을 막고 있어 영상과 자막을 직접 확인하지 못했습니다. 메타데이터, 설명란, <b>타임스탬프가 붙은 라이브 채팅 214건</b>, 강사진의 공개 자료로 강의를 역재구성했고, 주장마다 근거 등급을 붙였습니다.</p>
+            <div class="legend-ev">
+              <span class="ev ok">확인: 설명란·소유자·운영자·교수 본인 발언</span>
+              <span class="ev hint">정황: 시청자 채팅·타임스탬프가 강하게 시사</span>
+              <span class="ev guess">추정: 공개 자료·업계 관행 기반</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- 00 SUMMARY -->
+      <section id="summary" aria-labelledby="h-summary">
+        <div class="sec-head">
+          <div class="eyebrow"><span class="tc">00</span>결론 요약</div>
+          <h2 id="h-summary">강의는 세 겹이었고, 우리의 기회는 그 사이의 실행 격차에 있습니다</h2>
+        </div>
+        <div class="findings">
+          <div class="finding">
+            <div class="k"><span class="big">3겹</span>강의 구조</div>
+            <p><b>기술 · 관점 · 세일즈.</b> Claude Code(Opus 5)로 "AI 마케팅 직원"을 부리는 실습, 김경묵 교수의 "컨셉 = 본질 + 특성" 강연, 그리고 무료 라이브에서 9/13 판교 오프라인 유료 과정으로 이어지는 흐름입니다. <span class="ev ok">확인</span> <span class="ev hint">정황</span></p>
+          </div>
+          <div class="finding">
+            <div class="k"><span class="big tc">0:36:33</span>디자인 방법론</div>
+            <p><b>레퍼런스를 말로 설명하지 말고 규격(토큰)으로 넘기는 방식입니다.</b> 소유자가 Refero 링크를 공유한 뒤, Claude Code로 페이지와 포트폴리오를 만들고 에이전트가 이미지를 스스로 조사하는 흐름이 이어졌습니다. <span class="ev ok">확인</span> <span class="ev hint">정황</span></p>
+          </div>
+          <div class="finding">
+            <div class="k"><span class="big">48% · 78%</span>오퍼·폼 위치</div>
+            <p><b>퍼널 설계가 정교합니다.</b> 0:33에 "끝까지 보면 선물"을 예고하고, 1:22(48% 지점)에 1차 오퍼를, 2:14(78% 지점)에 후기와 자료 교환 폼을 열었습니다. 방송 6일 뒤 오프라인 과정이 열립니다. 선물 링크를 100분 뒤에 공개한 것이 리텐션 장치의 핵심입니다. <span class="ev ok">확인</span></p>
+          </div>
+          <div class="finding">
+            <div class="k"><span class="big">격차</span>약속과 실제</div>
+            <p><b>'왕초보'를 약속했지만 실제 내용은 CLI, 로컬 LLM, Hermes Agent 수준이었습니다.</b> "모르는 말만 가득", "터미널이 익숙치 않아 앱으로 돌아간다" 같은 반응이 나왔습니다. 교육으로 메우지 못하는 <b>실행 격차</b>가 우리 서비스의 진입점입니다. <span class="ev hint">정황</span></p>
+          </div>
+          <div class="finding">
+            <div class="k"><span class="big">50건</span>120–150분 채팅</div>
+            <p><b>참여는 시연이 아니라 관점에서 터졌습니다.</b> 30분 단위 채팅 수는 63 / 19 / 20 / 34 / 50 / 28건으로, 교수 파트와 오퍼가 겹친 구간이 가장 활발했습니다. 시연 구간은 조용히 받아 적는 구간이었습니다. <span class="ev ok">확인</span></p>
+          </div>
+        </div>
+
+        <h3>우리 서비스(marketing_ai)에 대한 권고</h3>
+        <div class="recs">
+          <div class="rec"><div class="top"><span class="rank">우선순위 1</span><span class="dom mkt"><i></i>CMO</span></div><p><b>"배우지 않아도 쓰는 AI 마케팅 직원"</b>으로 포지셔닝합니다. 교육 시장이 남긴 실행 격차를 제품으로 메웁니다.</p></div>
+          <div class="rec"><div class="top"><span class="rank">우선순위 2</span><span class="dom tech"><i></i>CTO</span></div><p>2주 안에 사내 <b>Claude Code 마케팅 하네스</b>(CLAUDE.md, 스킬 5종, 서브에이전트 4종)를 만들어 우리 마케팅부터 도그푸딩합니다.</p></div>
+          <div class="rec"><div class="top"><span class="rank">우선순위 3</span><span class="dom dsn"><i></i>디자인</span></div><p><b>브랜드 킷(DESIGN.md) → 템플릿 렌더 → QA → 멀티 포맷</b>을 MVP의 핵심으로 삼습니다. 한글 텍스트는 이미지 모델이 아니라 템플릿 레이어에 둡니다.</p></div>
+          <div class="rec"><div class="top"><span class="rank">우선순위 4</span><span class="dom mkt"><i></i>CMO</span></div><p><b>격주 90분 웨비나 GTM</b>을 운영합니다. 라이브 중 "내 가게 홍보물 즉석 생성"을 시연하고, 종료 30분 전에 폼을 공개하고, 14일 체험으로 연결합니다.</p></div>
+          <div class="rec"><div class="top"><span class="rank">우선순위 5</span><span class="dom tech"><i></i>CTO</span></div><p>모델 등급별 라우팅, <b>사람 승인(HITL)</b>, 테넌트별 비용 상한, 레퍼런스 복제 방지를 기술 원칙으로 둡니다.</p></div>
+        </div>
+      </section>
+
+      <!-- 01 TIMELINE -->
+      <section id="timeline" aria-labelledby="h-tl">
+        <div class="sec-head">
+          <div class="eyebrow"><span class="tc">01</span>강의 흐름 재구성</div>
+          <h2 id="h-tl">2시간 52분을 채팅 타임스탬프로 다시 그렸습니다</h2>
+          <p class="lede">위쪽 표식은 소유자·운영자가 채팅으로 직접 공지한 시점입니다. 가운데 띠는 채팅 내용으로 추정한 구간이고, 아래 막대는 10분 단위 채팅 수입니다. 구간 경계는 추정이므로 ±5분 정도 오차가 있을 수 있습니다.</p>
+        </div>
+        <div class="panel">
+          <div class="panel-head">
+            <h3>공지 시점 · 추정 구간 · 10분당 채팅 수</h3>
+            <span class="note">마지막 막대(170–172분)는 2분짜리 부분 구간</span>
+          </div>
+          <div class="chart-scroll">
+            <svg id="tl" viewBox="0 0 1000 330" role="img" aria-labelledby="tl-title tl-desc">
+              <title id="tl-title">강의 타임라인과 10분당 채팅 수</title>
+              <desc id="tl-desc">0분부터 172분까지. 채팅은 0–10분 43건, 130–150분 19건과 20건으로 가장 많고, 70–80분 2건으로 가장 적습니다.</desc>
+            </svg>
+          </div>
+          <div class="legend" aria-label="구간 범례">
+            <span><i class="tech"></i>기술 시연·Q&amp;A</span>
+            <span><i class="dsn"></i>디자인 시연</span>
+            <span><i class="view"></i>관점 강연(교수)·토크</span>
+            <span><i class="mkt"></i>오퍼·세일즈</span>
+            <span><i class="none"></i>대기·잡담</span>
+          </div>
+        </div>
+
+        <div class="seglist" aria-label="구간 목록">
+          <ul>
+            <li><span class="tc">0:00–0:10</span><i class="none"></i><span class="desc">대기·오프닝. 좋아요 유도, 로컬 LLM 장비 잡담. 약 10분 늦게 시작<small>0:08:53 "8시10분인데 영상 안나와"</small></span><span class="ev hint">정황</span></li>
+            <li><span class="tc">0:12–0:22</span><i class="view"></i><span class="desc">김경묵 교수 1부: 이력(HBR), 추론형 AI와 소통하는 방법론<small>0:12:41 "HBR", 0:14:29 이름</small></span><span class="ev hint">정황</span></li>
+            <li><span class="tc">0:23–0:34</span><i class="tech"></i><span class="desc">실무 발표자 등장, 로컬 LLM 개념, 터미널 작업창<small>0:26:35 "아래 작업창 무엇"</small></span><span class="ev hint">정황</span></li>
+            <li class="key"><span class="tc">0:33:41</span><i class="mkt"></i><span class="desc">"끝까지 시청 시 Claude Code 왕초보 가이드와 특별한 선물"<small>소유자 공지</small></span><span class="ev ok">확인</span></li>
+            <li class="key"><span class="tc">0:34–0:46</span><i class="dsn"></i><span class="desc">Claude Code(Opus 5) 디자인 시연, Refero 레퍼런스 활용<small>0:34:51 "opus5", 0:36:33 소유자 refero.design 링크</small></span><span class="ev ok">확인</span></li>
+            <li><span class="tc">0:52–1:03</span><i class="tech"></i><span class="desc">앱과 CLI 비교, 콘텐츠화, 에이전트의 이미지 자율 조사<small>1:02:58 "이미지 조사도 알아서 되는구나"</small></span><span class="ev hint">정황</span></li>
+            <li><span class="tc">1:05–1:17</span><i class="none"></i><span class="desc">AI 투자 규모(구독료·장비)와 수익 이야기<small>1:06:25, 1:07:13</small></span><span class="ev hint">정황</span></li>
+            <li class="key"><span class="tc">1:22:15</span><i class="mkt"></i><span class="desc">1차 오퍼: 오프라인 유료 과정 링크<small>소유자 링크, 운영자 "이번 과정은 오프라인 강의"</small></span><span class="ev ok">확인</span></li>
+            <li><span class="tc">1:24–1:43</span><i class="tech"></i><span class="desc">Q&amp;A: Opus 5 effort "높음", Hermes Agent, 로컬 LLM, 개인 봇 '윤봇'<small>1:27:02, 1:35:47</small></span><span class="ev hint">정황</span></li>
+            <li><span class="tc">1:48–1:52</span><i class="tech"></i><span class="desc">Q&amp;A: 업종 적용(편의점 홍보물 자동화 후기), ERP/CRM, 위험, 터미널 적응<small>1:48:20, 1:50:43, 1:51:21</small></span><span class="ev hint">정황</span></li>
+            <li><span class="tc">1:54–2:05</span><i class="view"></i><span class="desc">김경묵 교수 2부: 래리 그레이너, 컨셉 = 본질 + 특성, 인문학<small>1:54:16, 1:56:08, 2:39:02 교수 본인 채팅</small></span><span class="ev ok">확인</span></li>
+            <li class="key"><span class="tc">2:05–2:21</span><i class="mkt"></i><span class="desc">과정 날짜 "이번 주 일요일", 후기 폼과 자료 교환, 얼리버드 할인<small>2:05:24 운영자, 2:14:01 소유자 tally 링크</small></span><span class="ev ok">확인</span></li>
+            <li><span class="tc">2:23–2:52</span><i class="view"></i><span class="desc">마무리 토크: 후킹 비즈니스 비판, 불의 발견 비유, AI 비서 일상화<small>2:23:34, 2:40:28, 2:50:19</small></span><span class="ev hint">정황</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 02 ELEMENTS -->
+      <section id="elements" aria-labelledby="h-el">
+        <div class="sec-head">
+          <div class="eyebrow"><span class="tc">02</span>요소별 분석 · 적용 방안 · 실행 방법</div>
+          <h2 id="h-el">강의에서 뽑은 22개 요소를 우리 방식으로 옮기기</h2>
+          <p class="lede">카드마다 강의 속 근거, 적용 방안, 실행 단계, 성공 지표를 담았습니다. 영역과 근거 등급으로 걸러 볼 수 있습니다.</p>
+        </div>
+        <div class="filters" role="group" aria-label="요소 필터">
+          <div class="fgroup">
+            <span class="fl">영역</span>
+            <button class="fbtn" type="button" id="fa-all" data-area="all" aria-pressed="true">전체</button>
+            <button class="fbtn" type="button" id="fa-tech" data-area="tech" aria-pressed="false"><i class="tech"></i>기술</button>
+            <button class="fbtn" type="button" id="fa-dsn" data-area="dsn" aria-pressed="false"><i class="dsn"></i>디자인</button>
+            <button class="fbtn" type="button" id="fa-mkt" data-area="mkt" aria-pressed="false"><i class="mkt"></i>마케팅</button>
+          </div>
+          <div class="fgroup">
+            <span class="fl">근거</span>
+            <button class="fbtn" type="button" id="fg-all" data-grade="all" aria-pressed="true">전체</button>
+            <button class="fbtn" type="button" id="fg-ok" data-grade="ok" aria-pressed="false">확인 포함</button>
+            <button class="fbtn" type="button" id="fg-hint" data-grade="hint" aria-pressed="false">정황 포함</button>
+            <button class="fbtn" type="button" id="fg-guess" data-grade="guess" aria-pressed="false">추정 포함</button>
+          </div>
+          <span class="count" id="el-count" aria-live="polite">22 / 22</span>
+        </div>
+
+        <div class="cards" id="cards">
+          <!-- TECH -->
+          <article class="card" data-area="tech" data-grade="ok hint">
+            <div class="card-top"><span class="card-id"><i class="tech"></i>T1 · 기술</span><span><span class="ev ok">확인</span> <span class="ev hint">정황</span></span></div>
+            <h3>Claude Code CLI + Opus 5 (effort 높음)</h3>
+            <p class="src">근거: 설명란 "Claude Code CLI 왕초보 가이드북", <span class="tc">0:34:51</span>, <span class="tc">1:24:03</span></p>
+            <p class="obs">터미널에서 자연어로 "마케팅 직원"에게 일을 시키는 주력 도구입니다. CLAUDE.md, skills, subagents, hooks, MCP, plugins로 확장합니다. 강의 시점 모델은 Opus 5였고, 이후 Opus 5.5가 출시됐습니다.</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd>사내 <b>마케팅 직원 하네스</b>를 만들어 우리 마케팅에 먼저 씁니다(도그푸딩).</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li><span class="mono">CLAUDE.md</span>: 브랜드 톤, 금칙어, 타깃</li><li>skills 5종: 블로그, 인스타 캡션, 상세페이지, 홍보물, 주간 리포트</li><li>subagents 4종: 전략, 카피, 디자인, 리서치</li><li>hook: 금칙어·개인정보 차단</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>2주</b></span><span>지표 <b>제작 시간 50%↓, 재작업률 30% 이하</b></span></div>
+          </article>
+
+          <article class="card" data-area="tech" data-grade="ok guess">
+            <div class="card-top"><span class="card-id"><i class="tech"></i>T2 · 기술</span><span><span class="ev ok">확인</span> <span class="ev guess">추정</span></span></div>
+            <h3>스타터 플러그인(QJC 정상록)과 하네스</h3>
+            <p class="src">근거: 설명란 무료자료 "QJC 정상록 대표의 스타터 플러그인"</p>
+            <p class="obs">설치 한 번으로 전문 세팅을 갖추게 하는 번들입니다. QJC는 Claude Forge(에이전트 16, 커맨드 35, 스킬 33, 훅 22)를 공개하고 있습니다. 강의에서 배포한 플러그인의 실제 구성은 확인하지 못했습니다.</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd>T1 하네스를 <b>사내 플러그인</b>으로 묶어 신규 인원과 고객사 온보딩에 씁니다.</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li>skills, agents, hooks를 플러그인 구조로 패키징</li><li>사내 마켓플레이스 저장소에 버전 태그를 붙여 배포</li><li>업종별 변형(카페, 편의점)을 추가</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>1주</b></span><span>지표 <b>세팅 시간 10분 이내</b></span></div>
+          </article>
+
+          <article class="card" data-area="tech" data-grade="hint">
+            <div class="card-top"><span class="card-id"><i class="tech"></i>T3 · 기술</span><span class="ev hint">정황</span></div>
+            <h3>에이전트 자율 리서치</h3>
+            <p class="src">근거: <span class="tc">1:02:58</span> "이미지 조사도 알아서 되는구나"</p>
+            <p class="obs">사람이 찾지 않아도 에이전트가 웹 검색·브라우저 도구로 자료와 이미지를 모읍니다.</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd>경쟁사, 키워드, 이미지 조사를 <b>리서치 에이전트</b>에 맡깁니다.</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li>JSON 브리프 템플릿 정의: 목표, 타깃, 경쟁사, 톤</li><li>출처 URL을 필수 필드로 지정</li><li>결과를 T1 카피·디자인 스킬의 입력으로 연결</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>1주</b></span><span>지표 <b>브리프 시간 80%↓, 출처 누락 0건</b></span></div>
+          </article>
+
+          <article class="card" data-area="tech" data-grade="hint">
+            <div class="card-top"><span class="card-id"><i class="tech"></i>T4 · 기술</span><span class="ev hint">정황</span></div>
+            <h3>로컬 LLM + 클라우드 하이브리드</h3>
+            <p class="src">근거: <span class="tc">0:02–0:08</span> 장비 Q&amp;A, <span class="tc">0:24:45</span>, <span class="tc">1:31:35</span></p>
+            <p class="obs">기밀 데이터는 로컬 모델(Ollama, LM Studio)로, 기획·추론은 클라우드 모델로 처리하는 방식입니다.</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd>작업 등급에 따라 모델을 고르는 <b>라우팅 레이어</b>를 둡니다.</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li>Opus 5.5: 전략·브리프 / Sonnet 5: 카피 대량 생성 / Haiku 4.5: 분류·금칙어 검사</li><li>고객 DB는 마스킹하거나 로컬 LLM(옵션)으로 처리</li><li>작업별 비용 상한 설정</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>2주</b></span><span>지표 <b>건당 원가 목표 달성, 기밀 외부 전송 0건</b></span></div>
+          </article>
+
+          <article class="card" data-area="tech" data-grade="hint">
+            <div class="card-top"><span class="card-id"><i class="tech"></i>T5 · 기술</span><span class="ev hint">정황</span></div>
+            <h3>Hermes Agent와 개인 AI 비서('윤봇')</h3>
+            <p class="src">근거: <span class="tc">1:27:02</span> "헤르메스는 유료인가요", <span class="tc">1:35:47</span> "윤봇은 어떤 모델로", <span class="tc">2:50:19</span> "오늘 할거 뭐 있어?"</p>
+            <p class="obs">메신저에서 도는 개인 에이전트입니다. Hermes Agent(Nous Research)는 20개 이상의 모델 제공자를 지원하고, 해결 과정을 Skill로 누적하며, 텔레그램과 연동됩니다. 윤봇의 구성은 확인하지 못했습니다.</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd>대표님이 쓰는 <b>메신저 비서</b>를 만듭니다. 터미널 없이 명령만 보내면 됩니다.</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li>카카오톡 채널이나 텔레그램 봇으로 명령 수신("이번 주 인스타 3개")</li><li>백엔드 에이전트 실행</li><li>승인 버튼(HITL)을 누르면 게시하거나 다운로드</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>3주</b></span><span>지표 <b>주간 활성 대표 비율, 승인까지 걸린 시간</b></span></div>
+          </article>
+
+          <article class="card" data-area="tech" data-grade="guess">
+            <div class="card-top"><span class="card-id"><i class="tech"></i>T6 · 기술</span><span class="ev guess">추정</span></div>
+            <h3>자동화 4종: loop · goal · routines · workflows</h3>
+            <p class="src">근거: QJC 공개 가이드(강의에서 다뤘는지는 미확인)</p>
+            <p class="obs"><span class="mono">/loop</span>는 주기적으로 반복하고, <span class="mono">/goal</span>은 조건을 만족할 때까지 반복합니다. routines는 클라우드 스케줄이라 노트북이 꺼져 있어도 돌고, workflows는 대규모 병렬 처리에 씁니다.</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd>주간 반복 업무를 <b>무인 스케줄</b>로 돌립니다.</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li>월요일: 콘텐츠 캘린더 생성</li><li>금요일: 성과 리포트</li><li>장기 작업은 완료 조건을 명시한 goal형으로 설계</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>1주</b></span><span>지표 <b>무인 실행 성공률 95%</b></span></div>
+          </article>
+
+          <article class="card" data-area="tech" data-grade="hint">
+            <div class="card-top"><span class="card-id"><i class="tech"></i>T7 · 기술</span><span class="ev hint">정황</span></div>
+            <h3>앱과 CLI 병행 (터미널 진입 장벽)</h3>
+            <p class="src">근거: <span class="tc">0:57:10</span> "앱과 cli가 짬뽕", <span class="tc">1:51:21</span> "터미널이 익숙치 않아서 앱으로"</p>
+            <p class="obs">초보는 앱으로 시작하고 터미널로 옮겨가라는 흐름이었지만, 옮겨가는 데서 막히는 시청자가 많았습니다.</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd>우리 제품은 <b>터미널을 전혀 요구하지 않습니다</b>. 에이전트는 서버에서 돌리고, 사용자는 웹과 메신저만 씁니다.</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li>Claude Agent SDK 기반 서버 오케스트레이터</li><li>웹 대시보드(승인, 브랜드 킷), 메신저 봇</li><li>고급 사용자용 export(플러그인) 옵션</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>MVP 원칙</b></span><span>지표 <b>첫 콘텐츠까지 24시간 이내</b></span></div>
+          </article>
+
+          <article class="card" data-area="tech" data-grade="ok">
+            <div class="card-top"><span class="card-id"><i class="tech"></i>T8 · 기술</span><span class="ev ok">확인</span></div>
+            <h3>Tally 폼: 후기 ↔ 자료 교환</h3>
+            <p class="src">근거: <span class="tc">2:14:01</span> 소유자 "무료 강의 후기 남기고 자료 받기"</p>
+            <p class="obs">노코드 폼 하나로 후기(사회적 증거)와 리드를 동시에 모읍니다.</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd><b>리드·후기 루프</b>를 자동화합니다.</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li>폼 → 웹훅 → DB(CRM)</li><li>자료 자동 발송(이메일, 알림톡)</li><li>세그먼트(업종, AI 경험)별 너처링</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>1주</b></span><span>지표 <b>폼 전환율, 웨비나 → 유료 전환</b></span></div>
+          </article>
+
+          <!-- DESIGN -->
+          <article class="card" data-area="dsn" data-grade="ok hint">
+            <div class="card-top"><span class="card-id"><i class="dsn"></i>D1 · 디자인</span><span><span class="ev ok">확인</span> <span class="ev hint">정황</span></span></div>
+            <h3>Refero 레퍼런스 라이브러리·MCP</h3>
+            <p class="src">근거: <span class="tc">0:36:33</span> 소유자 refero.design 링크, <span class="tc">0:44:04</span> "레페로 무료로는…"</p>
+            <p class="obs">실제 서비스 화면 약 15만 장, 플로 약 6천 개를 검색할 수 있습니다. 무료로는 약 3%만 볼 수 있고, <b>MCP는 유료 플랜 전용</b>입니다(Pro 연간 결제 시 월 $10, 2026-08 기준).</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd>UX 패턴 리서치에는 유료 MCP를, 스타일 규칙에는 무료 경로(D2)를 씁니다.</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li>디자인팀 1석만 유료로 쓰며 검증</li><li><span class="mono">search_screens</span>로 업종·화면 유형 조사</li><li>레퍼런스 3개를 골라 D2로 넘김</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>1주</b></span><span>지표 <b>레퍼런스 → 시안 1시간 이내</b></span></div>
+          </article>
+
+          <article class="card" data-area="dsn" data-grade="guess">
+            <div class="card-top"><span class="card-id"><i class="dsn"></i>D2 · 디자인</span><span class="ev guess">추정</span></div>
+            <h3>DESIGN.md: 레퍼런스를 토큰 규격으로</h3>
+            <p class="src">근거: 강의에서 직접 언급되지 않음. Refero Styles와 Google DESIGN.md 규격으로 추정</p>
+            <p class="obs">색, 타이포, 간격, 컴포넌트, Do/Don't를 YAML 토큰과 본문으로 문서화합니다. <span class="mono">@google/design.md</span> CLI로 lint(WCAG 대비 포함)와 export를 할 수 있습니다. 무료 베타이고 오픈소스입니다.</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd>모든 크리에이티브 작업의 <b>단일 기준 문서</b>로 씁니다.</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li>레퍼런스 3개에서 hex, 타이포 위계, 여백 스케일 추출</li><li>브랜드 색을 primary로 고정하고 DESIGN.md 작성</li><li><span class="mono">npx @google/design.md lint</span>로 검사</li><li>CLAUDE.md에 "토큰 밖 색·폰트 금지" 한 줄 추가</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>1주</b></span><span>지표 <b>lint 통과, 브랜드 일관성 90%</b></span></div>
+          </article>
+
+          <article class="card" data-area="dsn" data-grade="hint">
+            <div class="card-top"><span class="card-id"><i class="dsn"></i>D3 · 디자인</span><span class="ev hint">정황</span></div>
+            <h3>레퍼런스 기반 랜딩·포트폴리오 생성</h3>
+            <p class="src">근거: <span class="tc">0:39:36</span> "포트폴리오 사이트 구축중인데 완전 도움", <span class="tc">0:57:12</span></p>
+            <p class="obs">브리프와 DESIGN.md를 넣어 HTML을 만들고, 스크린샷으로 스스로 점검한 뒤 고치는 루프입니다.</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd>가게 랜딩, 이벤트 페이지, 포트폴리오를 <b>생성 → 스크린샷 → 점검</b> 루프로 만듭니다.</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li>섹션: 히어로 → 문제 → 메뉴 → 후기 → 위치 → CTA</li><li>360px와 1280px 스크린샷</li><li>Do/Don't 점검표를 채우고 위반 항목 수정</li><li>포트폴리오: 폴더마다 case.md, 캐러셀 5장, 카드 JSON 생성</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>2주</b></span><span>지표 <b>페이지 1개 30분 이내</b></span></div>
+          </article>
+
+          <article class="card" data-area="dsn" data-grade="hint">
+            <div class="card-top"><span class="card-id"><i class="dsn"></i>D4 · 디자인</span><span class="ev hint">정황</span></div>
+            <h3>이미지 리서치 → 무드보드</h3>
+            <p class="src">근거: <span class="tc">1:02:58</span></p>
+            <p class="obs">웹 검색, Refero <span class="mono">get_screen</span>, 무드보드 MCP 가운데 어떤 방식을 썼는지는 알 수 없습니다.</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd>이미지를 쌓아 두지 말고 <b>출처가 달린 무드보드 문서</b>로 남깁니다.</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li>검색 키워드 10개 → 레퍼런스 12개 수집</li><li><span class="mono">moodboard.md</span> 표: 경로, 출처, 라이선스, 빌려올 포인트</li><li>공통 패턴 5개, 피할 패턴 3개 → D2의 입력</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>1주</b></span><span>지표 <b>출처 누락 0건</b></span></div>
+          </article>
+
+          <article class="card" data-area="dsn" data-grade="hint">
+            <div class="card-top"><span class="card-id"><i class="dsn"></i>D5 · 디자인</span><span class="ev hint">정황</span></div>
+            <h3>홍보물 자동 생성 (정적)</h3>
+            <p class="src">근거: <span class="tc">1:48:20</span> 편의점 운영자 "홍보물도 자동으로 만들고"(시청자 사례)</p>
+            <p class="obs">오프라인 소상공인의 실수요 신호입니다. 강의에서 시연했는지는 불명확합니다.</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd>한글 텍스트를 이미지 모델에 맡기지 않고 <b>HTML 템플릿 + 토큰 + 헤드리스 렌더</b>로 만듭니다.</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li>변수: {상품명}{정가}{할인가}{기간}{사진}</li><li>1080×1350, 1080×1920, A4 레이아웃을 CSS로 분기</li><li>Playwright로 PNG 3종 렌더, CSV 한 행이 홍보물 하나</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>2주</b></span><span>지표 <b>홍보물 1세트 5분 이내</b></span></div>
+          </article>
+
+          <article class="card" data-area="dsn" data-grade="guess">
+            <div class="card-top"><span class="card-id"><i class="dsn"></i>D6 · 디자인</span><span class="ev guess">추정</span></div>
+            <h3>사진 1장 → 광고 영상 (Higgsfield CLI)</h3>
+            <p class="src">근거: QJC 공개 gist. 강의 시연 여부는 미확인. <span class="tc">1:27:25</span> 영상 편집 요청</p>
+            <p class="obs">키프레임 4컷 → <span class="mono">generate create kling3_0</span>로 5초 클립 4개 → ffmpeg로 연결하고 한글 자막을 넣습니다. 약 25크레딧이 들고, <b>CLI로 생성하면 요금제와 상관없이 크레딧이 차감</b>됩니다.</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd>V3 기능으로 둡니다. 원가가 크레딧에 연동되므로 <b>건별로 과금</b>합니다.</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li><span class="mono">generate cost</span>로 비용 먼저 확인</li><li><span class="mono">--aspect_ratio 9:16 --duration 5 --wait --json</span></li><li>시안은 여러 개, 최종 선택은 사람이 함</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>3주(PoC)</b></span><span>지표 <b>상품당 영상 단가, 반려율</b></span></div>
+          </article>
+
+          <!-- MARKETING -->
+          <article class="card" data-area="mkt" data-grade="ok">
+            <div class="card-top"><span class="card-id"><i class="mkt"></i>M1 · 마케팅</span><span class="ev ok">확인</span></div>
+            <h3>타깃 호명과 약속 가치 카피</h3>
+            <p class="src">근거: 설명란 "왕초보 대표님", "막막하셨죠?", "시간 돈 낭비"</p>
+            <p class="obs">'대표님'이라는 호칭으로 결정권자를 겨냥합니다. 막막함 → 낭비 → 가능성 → 직원으로 이어지는 PAS 구조이고, 기능이 아니라 상태 변화를 약속합니다.</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd>이 구조를 <b>랜딩·웨비나 모집 템플릿</b>으로 표준화합니다.</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li>문제 3줄 → 대상 체크리스트 → 무료 자료 → 일정·CTA</li><li>업종별 변형 3종을 A/B 테스트</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>1주</b></span><span>지표 <b>랜딩 → 등록 30%</b></span></div>
+          </article>
+
+          <article class="card" data-area="mkt" data-grade="ok guess">
+            <div class="card-top"><span class="card-id"><i class="mkt"></i>M2 · 마케팅</span><span><span class="ev ok">확인</span> <span class="ev guess">추정</span></span></div>
+            <h3>"AI 마케팅 직원" 비유</h3>
+            <p class="src">근거: 설명란 "AI로 나만의 마케팅 직원을 만들고 싶어요"</p>
+            <p class="obs">'도구'가 아니라 '고용'의 비유입니다. 가격을 비교하는 기준이 소프트웨어 요금에서 인건비로 옮겨갑니다(추정).</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd>기능 목록 대신 <b>직무기술서(JD)</b> 형식으로 제품을 소개합니다.</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li>업종별 JD 카드 5종: "주 3회 블로그, 매일 인스타, 매주 전단"</li><li>가격을 "알바 월급의 1/20"로 앵커링</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>2주</b></span><span>지표 <b>데모 신청률</b></span></div>
+          </article>
+
+          <article class="card" data-area="mkt" data-grade="ok hint">
+            <div class="card-top"><span class="card-id"><i class="mkt"></i>M3 · 마케팅</span><span><span class="ev ok">확인</span> <span class="ev hint">정황</span></span></div>
+            <h3>권위 스택: 기술 · 실무 · 관점</h3>
+            <p class="src">근거: 설명란(정상록), <span class="tc">0:12:41</span> "HBR", <span class="tc">0:14:29</span> "김경묵 교수님"</p>
+            <p class="obs">윤자동(자동화), 정상록(QJC, 기업 AI 자동화), 김경묵(HBR 게재 교수)이 역할을 나눕니다. 채팅이 가장 많았던 구간은 관점 파트였습니다.</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd>웨비나마다 <b>비기술 게스트 20분</b>(브랜딩, 인문, 업종 전문가)을 넣습니다.</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li>월 1회 게스트 섭외</li><li>게스트 채널과 교차 홍보</li><li>30분을 넘기지 않음("대학 온라인 강의 같다" 반응 대비)</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>월 1회</b></span><span>지표 <b>게스트 회차 신규 구독</b></span></div>
+          </article>
+
+          <article class="card" data-area="mkt" data-grade="ok">
+            <div class="card-top"><span class="card-id"><i class="mkt"></i>M4 · 마케팅</span><span class="ev ok">확인</span></div>
+            <h3>리텐션 장치: "끝까지 보면 선물"</h3>
+            <p class="src">근거: <span class="tc">0:33:41</span> 예고 → <span class="tc">2:14:01</span> 교환 링크 공개(100분 뒤)</p>
+            <p class="obs">예고와 공개 사이를 길게 벌려 시청 시간을 늘립니다. 공개 시점은 방송의 78% 지점, 종료 38분 전이었습니다.</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd>예고에 더해 <b>중간 체크포인트 3회</b>(키워드 채팅 이벤트)를 둡니다.</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li>큐시트에 CTA 시점을 고정</li><li>폼은 종료 20~30분 전에 공개</li><li>고정 메시지와 화면 QR을 함께 노출("후기는 어디에 쓰나요" 방지)</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>즉시</b></span><span>지표 <b>폼 공개 시점 잔존율 60%</b></span></div>
+          </article>
+
+          <article class="card" data-area="mkt" data-grade="ok hint">
+            <div class="card-top"><span class="card-id"><i class="mkt"></i>M5 · 마케팅</span><span><span class="ev ok">확인</span> <span class="ev hint">정황</span></span></div>
+            <h3>리드 마그넷 ↔ 후기 교환</h3>
+            <p class="src">근거: 설명란 무료자료 2종, <span class="tc">2:14:01</span>, <span class="tc">2:16:18</span> "후기 남겼습니다"</p>
+            <p class="obs">자료를 주고 후기를 받습니다. 후기는 다음 모집에 쓸 사회적 증거가 되고, 연락처도 함께 수집했을 가능성이 있습니다(추정).</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd>업종별 <b>템플릿 팩</b>과 후기를 교환합니다.</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li>업종 템플릿 팩 2종 제작</li><li>Tally → 이메일·알림톡 자동 발송(T8)</li><li>인용 동의를 받은 후기를 카드뉴스로 재사용</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>1주</b></span><span>지표 <b>폼 제출 ÷ 피크 동접 25%</b></span></div>
+          </article>
+
+          <article class="card" data-area="mkt" data-grade="ok hint">
+            <div class="card-top"><span class="card-id"><i class="mkt"></i>M6 · 마케팅</span><span><span class="ev ok">확인</span> <span class="ev hint">정황</span></span></div>
+            <h3>오프라인 유료 전환과 얼리버드</h3>
+            <p class="src">근거: <span class="tc">1:22:15</span> 상품 링크, <span class="tc">1:45:33</span> 판교, <span class="tc">2:05:24</span> "이번 주 일요일", <span class="tc">2:20:51</span> 얼리버드</p>
+            <p class="obs">라이브에서 과정까지 6일뿐이라 결정할 시간이 짧습니다. 온라인 옵션이 없어 원거리·해외 수요는 놓쳤습니다(1:23:30, 1:48:27).</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd>7일 이내 전환 이벤트에 <b>온라인 동시 옵션</b>을 더합니다.</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li>결제 페이지와 얼리버드 D-day 설정</li><li>녹화본을 하위 가격대 상품으로 판매</li><li>대기자 명단 폼으로 다음 기수 수요 확보</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>2주</b></span><span>지표 <b>폼 대비 결제 5~10%</b></span></div>
+          </article>
+
+          <article class="card" data-area="mkt" data-grade="ok guess">
+            <div class="card-top"><span class="card-id"><i class="mkt"></i>M7 · 마케팅</span><span><span class="ev ok">확인</span> <span class="ev guess">추정</span></span></div>
+            <h3>컨셉 = 본질 + 특성 (김경묵 교수)</h3>
+            <p class="src">근거: <span class="tc">2:39:02</span> 교수 본인 채팅, <span class="tc">1:54:16</span> "래리 그레이너"</p>
+            <p class="obs">본질은 변하지 않는 것이고 특성은 변하는 기술입니다. 헤드라인에 모델명 같은 특성을 앞세우면 메시지가 빨리 낡고 타깃이 흩어집니다.</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd>모든 제목을 <b>컨셉 문장 템플릿</b>으로 점검합니다(§04).</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li>「[본질]을 [특성]으로 해결한다」 문장 작성</li><li>헤드라인에는 본질만, 모델명·도구명은 기능 설명에만</li><li>그레이너 단계별 세그먼트 메시지 3종</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>1주</b></span><span>지표 <b>메시지 테스트 CTR</b></span></div>
+          </article>
+
+          <article class="card" data-area="mkt" data-grade="hint">
+            <div class="card-top"><span class="card-id"><i class="mkt"></i>M8 · 마케팅</span><span class="ev hint">정황</span></div>
+            <h3>'왕초보' 약속과 실제 난이도의 격차</h3>
+            <p class="src">근거: <span class="tc">0:08:10</span> "모르는 말만 가득", <span class="tc">1:16:53</span>, <span class="tc">1:51:21</span></p>
+            <p class="obs">카피로 유입은 됐지만 콘텐츠는 중급 이상이었습니다. 기대 불일치가 이탈 위험으로 이어지고, 동시에 우리에게는 시장 기회가 됩니다.</p>
+            <dl>
+              <div><dt>적용 방안</dt><dd>터미널 없는 <b>Lv0 트랙</b>을 따로 운영하고, 세션마다 난이도 라벨을 붙입니다.</dd></div>
+              <div><dt>실행 방법</dt><dd><ol><li>등록 폼 3문항: 업종, 사용 도구, AI 경험</li><li>레벨별로 초대 메시지를 분리</li><li>시연은 우리 제품 UI로만 진행</li></ol></dd></div>
+            </dl>
+            <div class="kpi"><span>기간 <b>2주</b></span><span>지표 <b>"어렵다"류 채팅 5% 미만</b></span></div>
+          </article>
+        </div>
+        <p class="empty" id="el-empty" hidden>이 조건에 맞는 요소가 없습니다. 필터를 전체로 바꿔 보세요.</p>
+      </section>
+
+      <!-- 03 FUNNEL -->
+      <section id="funnel" aria-labelledby="h-fn">
+        <div class="sec-head">
+          <div class="eyebrow"><span class="tc">03</span>라이브 퍼널 역설계 · CMO</div>
+          <h2 id="h-fn">선물은 0:33에 약속하고 2:14에 건넸습니다</h2>
+          <p class="lede">방송 진행률 위에 세일즈 장치를 배치했습니다. 모든 시점은 소유자·운영자 채팅으로 확인한 값입니다.</p>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>방송 진행률과 전환 장치</h3><span class="note">총 172분 = 100%</span></div>
+          <div class="progress" aria-label="방송 진행률 위 전환 장치">
+            <div class="track"></div>
+            <div class="fill" style="width: 77.8%"></div>
+            <div class="pmark up" style="left: 19.5%"><span class="pl">선물 예고<span class="tc">0:33:41 · 19.5%</span></span><span class="dot"></span></div>
+            <div class="pmark down" style="left: 47.7%"><span class="dot"></span><span class="pl">1차 오퍼<span class="tc">1:22:15 · 47.7%</span></span></div>
+            <div class="pmark up" style="left: 72.8%"><span class="pl">일정 공지<span class="tc">2:05:24 · 72.8%</span></span><span class="dot"></span></div>
+            <div class="pmark down" style="left: 77.8%"><span class="dot"></span><span class="pl">폼·자료<span class="tc">2:14:01 · 77.8%</span></span></div>
+          </div>
+          <p class="assume">오프라인 과정은 방송 6일 뒤(9/13, 판교)에 열립니다. 채워진 막대는 선물을 받기까지 시청해야 하는 구간입니다.</p>
+        </div>
+
+        <div class="steps">
+          <div class="step"><div class="sh"><span class="sn">0</span><h3>인지·모집</h3></div><p>정규 목요일 라이브와 별도로 월요일 특집을 편성하고 "(D-day)"를 표기했습니다. 제목에는 '무료'와 '왕초보'를 넣었습니다.</p><div class="meta"><span class="ev ok">확인</span><span>조회율 9.5%(19일 경과)</span></div></div>
+          <div class="step"><div class="sh"><span class="sn">1</span><h3>웜업</h3></div><p>운영자가 인사하고 좋아요를 두 번 유도했습니다. 시작은 10분 지연됐습니다.</p><div class="meta"><span class="ev ok">확인</span><span>첫 10분 채팅 43건</span></div></div>
+          <div class="step"><div class="sh"><span class="sn">2</span><h3>권위 구축</h3></div><p>교수 소개(HBR 게재)로 권위를 세웠습니다.</p><div class="meta"><span class="ev hint">정황</span><span class="tc">0:12</span></div></div>
+          <div class="step key"><div class="sh"><span class="sn">3</span><h3>리텐션</h3></div><p>"끝까지 보면 선물"을 예고했고, 교환 링크는 100분 뒤에 공개했습니다.</p><div class="meta"><span class="ev ok">확인</span><span class="tc">0:33 → 2:14</span></div></div>
+          <div class="step"><div class="sh"><span class="sn">4</span><h3>가치 증명</h3></div><p>실습을 시연하고 바로 쓸 수 있는 링크(Refero)를 줬습니다.</p><div class="meta"><span class="ev ok">확인</span><span class="tc">0:34–1:03</span></div></div>
+          <div class="step key"><div class="sh"><span class="sn">5</span><h3>1차 오퍼</h3></div><p>몰입이 가장 높은 중반에 상품 링크를 공개했습니다.</p><div class="meta"><span class="ev ok">확인</span><span class="tc">1:22 (48%)</span></div></div>
+          <div class="step"><div class="sh"><span class="sn">6</span><h3>이의 해소</h3></div><p>온라인 가능 여부(오프라인 전용), 장소(판교), 나이 문제("AI는 나이와 무관")에 답했습니다.</p><div class="meta"><span class="ev ok">확인</span><span class="tc">1:23–2:31</span></div></div>
+          <div class="step key"><div class="sh"><span class="sn">7</span><h3>리드 마그넷 교환</h3></div><p>무료 자료 2종을 후기 작성과 교환했습니다. 후기는 사회적 증거로 남습니다.</p><div class="meta"><span class="ev ok">확인</span><span class="tc">2:14 (78%)</span></div></div>
+          <div class="step key"><div class="sh"><span class="sn">8</span><h3>유료 전환</h3></div><p>6일 뒤 판교 오프라인 과정을 얼리버드 할인과 함께 제안했습니다.</p><div class="meta"><span class="ev hint">정황</span><span>9/13(일)</span></div></div>
+          <div class="step"><div class="sh"><span class="sn">9</span><h3>재참여</h3></div><p>매주 목요일 정규 라이브, 채널 멤버십(배지 16건), 게스트 채널 교차 유입으로 다시 불러들입니다.</p><div class="meta"><span class="ev ok">확인</span><span>상시</span></div></div>
+        </div>
+
+        <h3>새는 곳</h3>
+        <div class="leaks">
+          <div class="leak"><b>온라인 옵션 없음</b><span>원거리·해외 수요 이탈. 녹화본을 하위 상품으로</span></div>
+          <div class="leak"><b>일정이 하루뿐</b><span>"9월13일 일정만". 대기자 명단 폼</span></div>
+          <div class="leak"><b>후기 CTA 동선 불명확</b><span>"후기는 어디에 쓰나요". 고정 메시지와 QR</span></div>
+          <div class="leak"><b>시작 지연·하울링</b><span>리허설, 오디오 전담 인력</span></div>
+          <div class="leak"><b>다시보기 자산 약함</b><span>챕터 없음, 댓글 0개. 챕터와 고정 CTA 추가</span></div>
+        </div>
+      </section>
+
+      <!-- 04 CONCEPT -->
+      <section id="concept" aria-labelledby="h-cc">
+        <div class="sec-head">
+          <div class="eyebrow"><span class="tc">04</span>컨셉 프레임 · 김경묵 교수</div>
+          <h2 id="h-cc">기술이 빨라질수록 헤드라인은 본질로 씁니다</h2>
+        </div>
+        <div class="equation" aria-label="컨셉은 본질 더하기 특성">
+          <div class="eq-term main"><span class="w">컨셉</span><p>시장이 우리를 한 문장으로 기억하는 방식</p></div>
+          <span class="eq-op" aria-hidden="true">=</span>
+          <div class="eq-term"><span class="w">본질</span><p>변하지 않으려는 현상입니다. 우리에게는 "사장님이 가게에 집중해도 손님이 계속 알게 된다"가 본질입니다.</p></div>
+          <span class="eq-op" aria-hidden="true">+</span>
+          <div class="eq-term"><span class="w">특성</span><p>변하려는 기술입니다. 우리에게는 "가게를 익힌 AI 직원이 매주 만들고 올린다"가 특성입니다.</p></div>
+        </div>
+        <blockquote class="quote">"컨셉을 구성하는 2개의 요소가 1. 본질 2. 특성이기 때문입니다. 본질은 변하지 않으려는 현상(사태)이고, 특성은 변하려는 기술이라고 할 수 있습니다."<cite>교수 본인 라이브 채팅 <span class="tc">2:39:02</span> · 대표 사례로 애플 아이패드 탄생 과정을 언급 <span class="ev ok">확인</span></cite></blockquote>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>그레이너 성장 단계 <span class="ev guess">추정 적용</span></th><th>대표가 겪는 위기</th><th>AI 마케팅 직원의 역할</th><th>메시지</th></tr></thead>
+            <tbody>
+              <tr><td>1. 창의성 · 1인·동네 매장</td><td class="q">리더십 위기: 대표가 모든 일을 직접 함</td><td>반복 제작 대행</td><td>"사장님이 손 떼도 홍보는 돌아갑니다"</td></tr>
+              <tr><td>2. 지시 · 직원 2~10명</td><td class="q">자율성 위기: 결재가 대표에게 몰림</td><td>브랜드 가이드 기반 초안과 자동 검수</td><td>"대표 스타일 그대로, 결재는 1분"</td></tr>
+              <tr><td>3. 위임 · 다점포·다채널</td><td class="q">통제 위기: 매장·채널이 제각각</td><td>승인 흐름, 통합 대시보드</td><td>"모든 매장 홍보를 한 화면에서"</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 05 SERVICE -->
+      <section id="service" aria-labelledby="h-sv">
+        <div class="sec-head">
+          <div class="eyebrow"><span class="tc">05</span>우리 서비스 적용·확장 · 통합안</div>
+          <h2 id="h-sv">교육이 끝난 자리에서 시작하는 제품</h2>
+          <p class="assume"><b>가정:</b> <span class="mono">papascompany/marketing_ai</span>에는 아직 서비스 코드가 없습니다. 그래서 서비스를 "중소상공인·1인 대표용 AI 마케팅 자동화 SaaS"로 가정했습니다. 스택(Next.js/Vercel + Supabase)은 연결된 커넥터를 보고 추정했습니다. 가격과 KPI는 모두 검증 전 가설입니다.</p>
+        </div>
+
+        <div class="position">
+          <p class="stmt">마케팅 인력이 없는 매장과 1인 대표를 위한, <em>배우지 않아도 쓰는 AI 마케팅 직원</em></p>
+          <p>교육형(윤자동, QJC)은 "배워서 직접 만든다", 도구형(Canva, 미리캔버스)은 "직접 조작한다", 대행사는 비쌉니다. 우리는 <b>대행 수준의 결과를 도구 가격에</b> 제공합니다.</p>
+        </div>
+
+        <div class="two">
+          <div class="panel">
+            <div class="panel-head"><h3>포지셔닝 맵</h3><span class="note">정성 비교</span></div>
+            <div class="pmap" role="img" aria-label="가로축은 직접 조작에서 대신 실행, 세로축은 낮은 가격에서 높은 가격. 우리는 대신 실행하면서 낮은 가격 영역에 위치">
+              <span class="axl x0">직접 조작</span><span class="axl x1">대신 실행</span>
+              <span class="axl y0">↓ 낮은 가격</span><span class="axl y1">↑ 높은 가격</span>
+              <div class="pdot" style="left: 22%; top: 72%"><i></i><b>도구형</b><small>Canva · 미리캔버스</small></div>
+              <div class="pdot" style="left: 34%; top: 38%"><i></i><b>교육형</b><small>윤자동 · QJC</small></div>
+              <div class="pdot" style="left: 78%; top: 18%"><i></i><b>대행사</b><small>월 수십~수백만 원</small></div>
+              <div class="pdot us" style="left: 76%; top: 72%"><i></i><b>marketing_ai</b><small>실행 격차를 메움</small></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h3>세그먼트 우선순위</h3></div>
+            <div class="tbl-wrap" style="border: 0">
+              <table>
+                <thead><tr><th>순위</th><th>세그먼트</th><th>해결할 일</th></tr></thead>
+                <tbody>
+                  <tr><td class="mono">1</td><td>오프라인 매장(편의점, 카페, 음식점, 미용)</td><td class="q">홍보물, SNS, 리뷰 답글</td></tr>
+                  <tr><td class="mono">2</td><td>1인 크리에이터, 소규모 셀러</td><td class="q">포트폴리오 콘텐츠화, 상세페이지</td></tr>
+                  <tr><td class="mono">3</td><td>AI 교육 수강 후 실행하지 못한 층</td><td class="q">"배웠는데 못 쓴다". 교육사 B2B2C 제휴</td></tr>
+                  <tr><td class="mono">—</td><td>개발자·고급 사용자</td><td class="q">초기 제외</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><h3>아키텍처</h3><span class="note">CTO·디자인 통합안</span></div>
+          <div class="arch">
+            <div class="layer"><span class="ll">채널</span><div class="lb"><span class="box">웹 대시보드 · Next.js/Vercel</span><span class="box">메신저 봇 · 카카오/텔레그램</span></div></div>
+            <div class="layer"><span class="ll">오케스트레이터</span><div class="lb"><span class="box hl">Claude Agent SDK</span><span class="arrow">→</span><span class="box">전략(CMO)</span><span class="box">카피라이터</span><span class="box">디자이너</span><span class="box">리서처</span><span class="box">성과분석</span></div></div>
+            <div class="layer"><span class="ll">모델 라우팅</span><div class="lb"><span class="box">Opus 5.5 · 전략·브리프</span><span class="box">Sonnet 5 · 카피 대량</span><span class="box">Haiku 4.5 · 분류·금칙어</span><span class="box">로컬 LLM · 기밀(옵션)</span></div></div>
+            <div class="layer"><span class="ll">크리에이티브 파이프라인</span><div class="lb"><span class="box"><span class="tc">①</span>브랜드 킷 DESIGN.md</span><span class="arrow">→</span><span class="box"><span class="tc">②</span>업종 레퍼런스</span><span class="arrow">→</span><span class="box"><span class="tc">③</span>생성: 템플릿 렌더 · 사진 · 영상</span><span class="arrow">→</span><span class="box hl"><span class="tc">④</span>디자인 QA 게이트</span><span class="arrow">→</span><span class="box"><span class="tc">⑤</span>멀티 포맷</span><span class="arrow">→</span><span class="box hl"><span class="tc">⑥</span>사장님 승인</span><span class="arrow">→</span><span class="box"><span class="tc">⑦</span>게시·인쇄</span></div></div>
+            <p class="loop-note"><span class="tc">⑧</span> 성과 수집 → ②·③ 가중치 피드백 (매주 routines)</p>
+            <div class="layer"><span class="ll">데이터</span><div class="lb"><span class="box">Supabase: 브랜드 킷</span><span class="box">콘텐츠·승인 로그</span><span class="box">리드 CRM</span><span class="box">비용 원장</span></div></div>
+          </div>
+        </div>
+
+        <div class="two">
+          <div class="panel">
+            <div class="panel-head"><h3>기능 우선순위</h3><span class="note">강조 칸 = MVP</span></div>
+            <div class="matrix" role="img" aria-label="Impact와 Effort 3×3 매트릭스">
+              <span class="mylab" style="grid-row: 1">Impact 높음</span>
+              <div class="mcell win"><span class="mitem">가게 프로필 → 브랜드 킷<span class="tc">MVP</span></span></div>
+              <div class="mcell win"><span class="mitem">업종 템플릿 홍보물 + 멀티 포맷<span class="tc">MVP</span></span><span class="mitem">인스타·블로그 글 자동 작성·예약<span class="tc">MVP</span></span><span class="mitem">터미널 없는 UI(웹 + 카톡)<span class="tc">MVP 원칙</span></span><span class="mitem">자산 → 다채널 분해<span class="tc">V1.5</span></span></div>
+              <div class="mcell"><span class="mitem">네이버 플레이스·리뷰 답글<span class="tc">V2 전 API 검증</span></span></div>
+              <span class="mylab" style="grid-row: 2">중간</span>
+              <div class="mcell"></div>
+              <div class="mcell"><span class="mitem">디자인 QA 게이트<span class="tc">V2</span></span><span class="mitem">업종 레퍼런스 라이브러리<span class="tc">V2</span></span><span class="mitem">주간 성과 리포트<span class="tc">V2</span></span></div>
+              <div class="mcell"><span class="mitem">사진 → 숏폼 영상<span class="tc">V3 · 크레딧 원가</span></span></div>
+              <span class="mylab" style="grid-row: 3">낮음</span>
+              <div class="mcell"></div><div class="mcell"></div><div class="mcell"></div>
+              <span></span><span class="mxlab">Effort 낮음</span><span class="mxlab">중간</span><span class="mxlab">높음</span>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h3>멀티 포맷 규격</h3><span class="note">비율대로 그림</span></div>
+            <div class="formats">
+              <div class="fmt"><div class="shape" style="width: 60px; height: 60px"></div><span class="fn">대표 이미지</span><span class="fs">1:1 · 1000²</span></div>
+              <div class="fmt"><div class="shape" style="width: 60px; height: 75px"></div><span class="fn">인스타 피드</span><span class="fs">4:5 · 1080×1350</span></div>
+              <div class="fmt"><div class="shape" style="width: 60px; height: 80px"></div><span class="fn">피드 그리드</span><span class="fs">3:4 · 1080×1440</span></div>
+              <div class="fmt"><div class="shape" style="width: 60px; height: 107px"></div><span class="fn">스토리·릴스</span><span class="fs">9:16 · 1080×1920</span></div>
+              <div class="fmt"><div class="shape" style="width: 60px; height: 85px"></div><span class="fn">전단·POP</span><span class="fs">A4 · 300dpi</span></div>
+              <div class="fmt"><div class="shape var" style="width: 60px; height: 120px"></div><span class="fn">스마트스토어 상세</span><span class="fs">860 × 가변</span></div>
+            </div>
+            <p class="assume" style="margin-top: 12px">단순 크롭이 아니라 포맷별 레이아웃 템플릿에 블록을 다시 배치합니다. 우선순위는 헤드라인 &gt; 가격 &gt; 사진 &gt; CTA입니다.</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><h3>디자인 QA 게이트</h3><span class="note">승인 화면에 "브랜드 일치 92점"처럼 표시</span></div>
+          <div class="tbl-wrap" style="border: 0">
+            <table>
+              <thead><tr><th>검사</th><th>방법</th><th>기준</th></tr></thead>
+              <tbody>
+                <tr><td>토큰 밖 색상</td><td class="q">computed style, 팔레트 추출 후 ΔE 비교</td><td class="mono">ΔE ≤ 10 (초기값)</td></tr>
+                <tr><td>텍스트 대비</td><td class="q">WCAG 계산, DESIGN.md lint</td><td class="mono">본문 4.5:1 · 큰 글자 3:1</td></tr>
+                <tr><td>폰트 라이선스</td><td class="q">화이트리스트(Pretendard, Noto Sans KR 등) 대조</td><td>확인된 폰트만 허용</td></tr>
+                <tr><td>모바일 가독성</td><td class="q">360px 렌더 후 최소 글자 크기 측정</td><td class="mono">≈ 12px 이상</td></tr>
+                <tr><td>광고 문구</td><td class="q">업종별 금지 표현 사전 + LLM 검토</td><td>과장·오인 표현 차단</td></tr>
+                <tr><td>레퍼런스 유사도</td><td class="q">이미지 임베딩 유사도</td><td>임계값을 넘으면 차단</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div>
+          <h3 style="margin-bottom: 10px">가격·패키징 가설 <span class="ev guess">추정</span></h3>
+          <div class="tiers">
+            <div class="tier"><span class="tn">Free</span><span class="tp">0원</span><p>월 5개, 워터마크. 리드 확보용</p></div>
+            <div class="tier"><span class="tn">Starter</span><span class="tp">월 2~3만</span><p>1개 채널, 주 3회 콘텐츠, 홍보물 템플릿</p></div>
+            <div class="tier main"><span class="tn">Pro · 주력</span><span class="tp">월 7~9만</span><p>다채널, 리뷰 답글, 월간 리포트</p></div>
+            <div class="tier"><span class="tn">Done-with-you</span><span class="tp">20~40만</span><p>셋업 워크숍 + Pro 3개월</p></div>
+            <div class="tier"><span class="tn">영상</span><span class="tp">건별</span><p>크레딧 원가에 연동</p></div>
+          </div>
+          <p class="assume" style="margin-top: 10px">검증 방법: 웨비나 폼에 가격 민감도 4문항(Van Westendorp)을 넣고, 1기 얼리버드 결제율로 가격을 확정합니다.</p>
+        </div>
+      </section>
+
+      <!-- 06 ROADMAP -->
+      <section id="roadmap" aria-labelledby="h-rm">
+        <div class="sec-head">
+          <div class="eyebrow"><span class="tc">06</span>90일 통합 로드맵</div>
+          <h2 id="h-rm">6주차 첫 웨비나, 13주차 유료 고객 50~100명</h2>
+          <p class="lede">세 트랙이 같은 마일스톤을 향합니다. 굵게 표시한 칸이 외부로 드러나는 마일스톤입니다.</p>
+        </div>
+        <div class="tbl-wrap">
+          <div class="road" role="table" aria-label="90일 로드맵">
+            <div class="rh" role="columnheader">트랙</div><div class="rh" role="columnheader">W1–2</div><div class="rh" role="columnheader">W3–4</div><div class="rh" role="columnheader">W5–6</div><div class="rh" role="columnheader">W7–8</div><div class="rh" role="columnheader">W9–10</div><div class="rh" role="columnheader">W11–13</div>
+            <div class="rl"><i class="tech"></i>기술 CTO</div>
+            <div class="cell tech">사내 하네스 MVP: CLAUDE.md, 스킬 5, 서브에이전트 4</div>
+            <div class="cell tech">서비스 MVP 착수: 브랜드 킷 온보딩, 모델 라우팅</div>
+            <div class="cell tech ms">주간 콘텐츠 팩 → 승인 → export</div>
+            <div class="cell tech">메신저 봇, 주간 routines, 리드 폼 → CRM</div>
+            <div class="cell tech">비용 원장, 테넌트별 상한</div>
+            <div class="cell tech">성과 → 브리프 피드백 루프</div>
+            <div class="rl"><i class="mkt"></i>마케팅 CMO</div>
+            <div class="cell mkt">컨셉 문장, 업종 인터뷰 15명, 랜딩 v1과 대기자 명단</div>
+            <div class="cell mkt">파일럿 매장 10곳, 템플릿 팩 2종</div>
+            <div class="cell mkt ms">웨비나 1회차: 실습 60 + 게스트 20 + 오퍼 10</div>
+            <div class="cell mkt">14일 체험, 얼리버드 전환</div>
+            <div class="cell mkt">셋업 워크숍 파일럿 20명</div>
+            <div class="cell mkt ms">격주 라이브 정기화, 교육 파트너 1곳, 유료 50~100명</div>
+            <div class="rl last"><i class="dsn"></i>디자인</div>
+            <div class="cell dsn last">브랜드 킷 스키마, DESIGN.md 템플릿</div>
+            <div class="cell dsn last">정적 템플릿 10종, 멀티 포맷 렌더</div>
+            <div class="cell dsn last ms">웨비나 데모: 즉석 홍보물</div>
+            <div class="cell dsn last">디자인 QA 게이트 v1</div>
+            <div class="cell dsn last">업종 레퍼런스 라이브러리 v1</div>
+            <div class="cell dsn last">사진 → 숏폼 PoC(크레딧 원가 측정)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 RISKS -->
+      <section id="risks" aria-labelledby="h-rk">
+        <div class="sec-head">
+          <div class="eyebrow"><span class="tc">07</span>리스크</div>
+          <h2 id="h-rk">강의에서 이미 드러난 위험부터 막습니다</h2>
+        </div>
+        <div class="risks">
+          <div class="risk"><span class="sev high">높음</span><span class="r">비용 폭주 <span class="assume">강의에서 "2달 구독료 천만 원" 언급</span></span><span class="m">작업 등급 라우팅, 테넌트별 상한, 비용 원장</span></div>
+          <div class="risk"><span class="sev high">높음</span><span class="r">환각·허위광고(효능, 가격)</span><span class="m">게시 전 사람 승인 필수, 근거 URL 첨부, 금지 표현 사전</span></div>
+          <div class="risk"><span class="sev high">높음</span><span class="r">레퍼런스 복제(저작권, 트레이드 드레스)</span><span class="m">규칙만 추출, 임베딩 유사도로 차단</span></div>
+          <div class="risk"><span class="sev">중간</span><span class="r">폰트 라이선스·초상권</span><span class="m">폰트 화이트리스트, 인물 사진 동의 확인</span></div>
+          <div class="risk"><span class="sev">중간</span><span class="r">플랫폼 API 제약(인스타, 네이버)</span><span class="m">Graph API 범위 안에서만 게시, 네이버는 초안 export로 폴백</span></div>
+          <div class="risk"><span class="sev">중간</span><span class="r">모델·도구 변화 속도 <span class="assume">강의 2주 뒤 Opus 5.5 출시</span></span><span class="m">스킬과 라우팅 테이블로 추상화</span></div>
+          <div class="risk"><span class="sev">중간</span><span class="r">'왕초보' 기대 불일치</span><span class="m">터미널 없는 UI, 난이도 라벨</span></div>
+        </div>
+      </section>
+
+      <!-- 08 NEXT -->
+      <section id="next" aria-labelledby="h-nx">
+        <div class="sec-head">
+          <div class="eyebrow"><span class="tc">08</span>v2 검증 · 출처</div>
+          <h2 id="h-nx">정황과 추정 항목을 발화 원문과 대조하는 방법</h2>
+        </div>
+        <div class="next">
+          <div class="opt">
+            <h3>A. 자막 붙여넣기 <span class="assume">가장 빠름</span></h3>
+            <p>YouTube 영상 설명 아래의 "스크립트 표시"에서 전체를 복사해 전달해 주세요. 구간별로 대조한 v2를 만들 수 있습니다.</p>
+          </div>
+          <div class="opt">
+            <h3>B. 네트워크 허용</h3>
+            <p>클라우드 환경 설정의 Network access에 아래 도메인을 추가하면 자막을 직접 수집할 수 있습니다.</p>
+            <div class="copyrow"><code id="domains">www.youtube.com, *.googlevideo.com</code><button class="copybtn" type="button" id="copy-domains">복사</button></div>
+          </div>
+          <div class="opt">
+            <h3>C. 추가 확인 과제</h3>
+            <p>오프라인 과정 페이지(product/3)의 커리큘럼과 가격, 배포된 스타터 플러그인의 실제 구성을 확인해야 합니다.</p>
+          </div>
+        </div>
+
+        <h3>출처</h3>
+        <ol class="sources">
+          <li>1차 자료: YouTube 메타데이터, 설명란, 라이브 채팅 리플레이(2026-09-26 수집, 시청자 계정 익명 처리)</li>
+          <li>윤자동 — <a href="https://www.yunjadong.com/" target="_blank" rel="noopener">yunjadong.com</a> · 오프라인 과정 <a href="https://www.yunjadong.com/product/3" target="_blank" rel="noopener">product/3</a>(본문 미확인)</li>
+          <li>QJC — <a href="https://qjc.app/en/blog/claude-code-automation-loops-workflows" target="_blank" rel="noopener">Claude Code 자동화 가이드</a> · <a href="https://github.com/sangrokjung/claude-forge" target="_blank" rel="noopener">Claude Forge</a> · <a href="https://gist.github.com/sangrokjung/8d18489fcec34c8633f01b6439fbd7e5" target="_blank" rel="noopener">사진 1장 → 광고 영상</a></li>
+          <li>Hermes Agent — <a href="https://hermes-agent.org/" target="_blank" rel="noopener">hermes-agent.org</a> · <a href="https://wikidocs.net/book/19414" target="_blank" rel="noopener">WikiDocs 가이드</a></li>
+          <li>Refero — <a href="https://github.com/referodesign/refero_skill" target="_blank" rel="noopener">Refero Skill</a> · <a href="https://doc.refero.design/mcp/getting-started" target="_blank" rel="noopener">MCP 문서</a> · <a href="https://styles.refero.design/design-md/design-md-for-claude-code" target="_blank" rel="noopener">DESIGN.md for Claude Code</a></li>
+          <li>Google DESIGN.md — <a href="https://github.com/google-labs-code/design.md" target="_blank" rel="noopener">google-labs-code/design.md</a></li>
+          <li>Higgsfield — <a href="https://higgsfield.ai/cli" target="_blank" rel="noopener">CLI</a> · <a href="https://creatify.ai/blog/higgsfield-pricing-(2026)-plans-and-what-you-ll-actually-pay" target="_blank" rel="noopener">요금 정리</a></li>
+          <li>Claude Code 문서 — <a href="https://code.claude.com/docs/ko/skills" target="_blank" rel="noopener">skills</a> · <a href="https://code.claude.com/docs/ko/plugins" target="_blank" rel="noopener">plugins</a></li>
+          <li>김경묵 교수 HBR Korea 기고 — <a href="https://www.hbrkorea.com/article/view/atype/ma/article_no/579" target="_blank" rel="noopener">hbrkorea.com</a></li>
+          <li>Greiner, "Evolution and Revolution as Organizations Grow" — <a href="https://hbr.org/1998/05/evolution-and-revolution-as-organizations-grow" target="_blank" rel="noopener">HBR</a></li>
+          <li>웨비나 벤치마크 — <a href="https://www.on24.com/blog/key-takeaways-from-the-2025-webinar-benchmarks-report/" target="_blank" rel="noopener">ON24</a></li>
+          <li>채널 규격 — <a href="https://www.linearity.io/blog/instagram-size-guide/" target="_blank" rel="noopener">인스타그램</a> · <a href="https://1minutesangse.com/guides/smartstore-detail-page" target="_blank" rel="noopener">스마트스토어</a></li>
+        </ol>
+      </section>
+
+      <footer>papascompany/marketing_ai · docs/reports · 같은 내용의 Markdown 보고서: 2026-09-26_yunjadong-ai-marketing-live.md</footer>
+    </main>
+  </div>
+</div>
+<div class="tip" id="tip" hidden></div>
+
+<script>
+(function () {
+  var NS = "http://www.w3.org/2000/svg";
+  var svg = document.getElementById("tl");
+  var tip = document.getElementById("tip");
+  var TOTAL = 172.33, X0 = 60, X1 = 980;
+  function x(min) { return X0 + (X1 - X0) * min / TOTAL; }
+  function el(name, attrs, parent) {
+    var n = document.createElementNS(NS, name);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    (parent || svg).appendChild(n);
+    return n;
+  }
+  function txt(s, attrs, parent) { var t = el("text", attrs, parent); t.textContent = s; return t; }
+  function tc(min) { var h = Math.floor(min / 60), m = Math.round(min % 60); return h + ":" + (m < 10 ? "0" : "") + m; }
+  function showTip(html, evt) {
+    tip.innerHTML = html; tip.hidden = false;
+    var r = tip.getBoundingClientRect();
+    var left = Math.min(window.innerWidth - r.width - 8, Math.max(8, evt.clientX + 12));
+    var top = evt.clientY - r.height - 12; if (top < 8) top = evt.clientY + 16;
+    tip.style.left = left + "px"; tip.style.top = top + "px";
+  }
+  function hideTip() { tip.hidden = true; }
+  function bindTip(node, html) {
+    node.addEventListener("mousemove", function (e) { showTip(html, e); });
+    node.addEventListener("mouseleave", hideTip);
+    node.addEventListener("focus", function () { var r = node.getBoundingClientRect(); showTip(html, { clientX: r.left + r.width / 2, clientY: r.top }); });
+    node.addEventListener("blur", hideTip);
+  }
+
+  // Events (owner/staff confirmed)
+  var events = [
+    { t: 33.68, label: "선물 예고", tcs: "0:33:41", row: 0 },
+    { t: 36.55, label: "Refero 링크", tcs: "0:36:33", row: 1 },
+    { t: 82.25, label: "1차 오퍼", tcs: "1:22:15", row: 0 },
+    { t: 105.55, label: "장소: 판교", tcs: "1:45:33", row: 1 },
+    { t: 125.4, label: "9/13(일) 공지", tcs: "2:05:24", row: 0 },
+    { t: 134.02, label: "후기 폼·자료", tcs: "2:14:01", row: 1 }
+  ];
+  // Segments (inferred)
+  var segs = [
+    [0, 10, "none", "대기·오프닝"], [10, 22, "view", "교수 1부"], [22, 34, "tech", "로컬 LLM·작업창"],
+    [34, 46, "dsn", "디자인 시연(Refero)"], [46, 64, "tech", "앱·CLI·이미지 조사"], [64, 80, "none", "AI 투자 토크"],
+    [80, 86, "mkt", "1차 오퍼"], [86, 106, "tech", "Q&A: Hermes·로컬·윤봇"], [106, 114, "tech", "Q&A: 업종·위험"],
+    [114, 125, "view", "교수 2부: 그레이너·컨셉"], [125, 142, "mkt", "일정·후기 폼·얼리버드"], [142, 172.33, "view", "마무리 토크"]
+  ];
+  var bins = [43, 11, 9, 9, 4, 6, 8, 2, 10, 8, 11, 15, 11, 19, 20, 7, 12, 9];
+
+  var BAND_Y = 104, BAND_H = 22, BASE = 300, TOPY = 150, YMAX = 45;
+  function y(v) { return BASE - (BASE - TOPY) * v / YMAX; }
+
+  // row labels
+  txt("공지", { x: 0, y: 40, "class": "rowlab" });
+  txt("구간", { x: 0, y: BAND_Y + 15, "class": "rowlab" });
+  txt("채팅/10분", { x: 0, y: TOPY - 10, "class": "rowlab" });
+
+  // grid + y ticks
+  [0, 10, 20, 30, 40].forEach(function (v) {
+    el("line", { x1: X0, x2: X1, y1: y(v), y2: y(v), "class": v === 0 ? "baseline" : "gridline" });
+    txt(String(v), { x: X0 - 8, y: y(v) + 4, "text-anchor": "end", "class": "ax" });
+  });
+  // x ticks
+  [0, 30, 60, 90, 120, 150].forEach(function (m) {
+    txt(tc(m), { x: x(m), y: BASE + 18, "text-anchor": m === 0 ? "start" : "middle", "class": "ax" });
+  });
+  txt("2:52", { x: X1, y: BASE + 18, "text-anchor": "end", "class": "ax" });
+
+  // event guide lines sit behind the bars
+  events.forEach(function (e) {
+    var ex = x(e.t), ly = e.row === 0 ? 30 : 64;
+    el("line", { x1: ex, x2: ex, y1: ly + 16, y2: BASE, "class": "evline" });
+  });
+
+  // bars
+  var bw = (X1 - X0) * 10 / TOTAL;
+  bins.forEach(function (v, i) {
+    var start = i * 10, end = Math.min(TOTAL, start + 10);
+    var bx = x(start) + 2, w = Math.max(4, x(end) - x(start) - 4);
+    var top = y(v), r = Math.min(4, w / 2, BASE - top);
+    var d = "M" + bx + "," + BASE + " V" + (top + r) + " Q" + bx + "," + top + " " + (bx + r) + "," + top +
+            " H" + (bx + w - r) + " Q" + (bx + w) + "," + top + " " + (bx + w) + "," + (top + r) + " V" + BASE + " Z";
+    var label = tc(start) + "–" + tc(end) + (i === 17 ? " (부분 구간)" : "");
+    var hit = el("rect", { x: x(start), y: TOPY - 6, width: x(end) - x(start), height: BASE - TOPY + 6, "class": "bar-hit", tabindex: "0", role: "img", "aria-label": label + " 채팅 " + v + "건" });
+    el("path", { d: d, "class": "bar" + (v >= 19 ? " peak" : "") });
+    bindTip(hit, "<b>" + label + "</b><br>채팅 " + v + "건");
+    if (v >= 19) txt(String(v), { x: bx + w / 2, y: top - 6, "text-anchor": "middle", "class": "vlab" });
+  });
+
+  // segments band
+  segs.forEach(function (s) {
+    var r = el("rect", { x: x(s[0]), y: BAND_Y, width: Math.max(2, x(s[1]) - x(s[0])), height: BAND_H, "class": "seg " + s[2], tabindex: "0", role: "img", "aria-label": tc(s[0]) + "–" + tc(s[1]) + " " + s[3] });
+    bindTip(r, "<b>" + tc(s[0]) + "–" + tc(s[1]) + "</b><br>" + s[3] + "<br><span style='opacity:.75'>채팅 기반 추정 구간</span>");
+  });
+
+  // events
+  events.forEach(function (e) {
+    var ex = x(e.t), ly = e.row === 0 ? 30 : 64;
+    txt(e.label, { x: ex, y: ly - 2, "text-anchor": "middle", "class": "evlab" });
+    txt(e.tcs, { x: ex, y: ly + 11, "text-anchor": "middle", "class": "evtc" });
+    var dot = el("circle", { cx: ex, cy: BAND_Y + BAND_H / 2, r: 5, "class": "evdot", tabindex: "0", role: "img", "aria-label": e.tcs + " " + e.label });
+    bindTip(dot, "<b>" + e.tcs + "</b><br>" + e.label + "<br><span style='opacity:.75'>소유자·운영자 공지</span>");
+  });
+
+  // Filters
+  var area = "all", grade = "all";
+  var cards = Array.prototype.slice.call(document.querySelectorAll("#cards .card"));
+  var countEl = document.getElementById("el-count"), emptyEl = document.getElementById("el-empty");
+  function apply() {
+    var n = 0;
+    cards.forEach(function (c) {
+      var ok = (area === "all" || c.dataset.area === area) && (grade === "all" || c.dataset.grade.split(" ").indexOf(grade) >= 0);
+      c.hidden = !ok; if (ok) n++;
+    });
+    countEl.textContent = n + " / " + cards.length;
+    emptyEl.hidden = n !== 0;
+  }
+  function wire(sel, key) {
+    var btns = Array.prototype.slice.call(document.querySelectorAll(sel));
+    btns.forEach(function (b) {
+      b.addEventListener("click", function () {
+        btns.forEach(function (o) { o.setAttribute("aria-pressed", o === b ? "true" : "false"); });
+        if (key === "area") area = b.dataset.area; else grade = b.dataset.grade;
+        apply();
+      });
+    });
+  }
+  wire("[data-area].fbtn", "area");
+  wire("[data-grade].fbtn", "grade");
+
+  // Copy
+  var cb = document.getElementById("copy-domains");
+  cb.addEventListener("click", function () {
+    var text = document.getElementById("domains").textContent;
+    function selectFallback() {
+      var r = document.createRange(); r.selectNodeContents(document.getElementById("domains"));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      cb.textContent = "선택됨 · Ctrl+C";
+    }
+    try {
+      navigator.clipboard.writeText(text).then(function () { cb.textContent = "복사됨"; setTimeout(function () { cb.textContent = "복사"; }, 1600); }, selectFallback);
+    } catch (e) { selectFallback(); }
+  });
+})();
+</script>
